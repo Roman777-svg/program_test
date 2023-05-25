@@ -4,7 +4,7 @@ const { OpenAIApi, Configuration } = require("openai");
 const app = express();
 const port = 3000;
 
-const apiKey = "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"; // Замените на ваш действительный API-ключ
+const apiKey = "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"; // Замените на ваш действительный API-ключ
 
 const configuration = new Configuration({
   apiKey: apiKey,
