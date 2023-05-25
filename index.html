@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat with GPT</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>Chat with GPT</h1>
+  <div id="chat-container">
+    <div id="chat-log"></div>
+    <input type="text" id="user-input" placeholder="Your message...">
+    <button id="send-button">Send</button>
+  </div>
+
+  <script>
+    $(document).ready(() => {
+      const chatLog = $("#chat-log");
+      const userInput = $("#user-input");
+      const sendButton = $("#send-button");
+
+      const apiUrl = "http://localhost:3000/chat";
+
+      sendButton.click(() => {
+        const userMessage = userInput.val();
+        userInput.val("");
+
+        $.ajax({
+          url: apiUrl,
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ message: userMessage }),
+          success: (data) => {
+            const botMessage = data.botMessage;
+            let chatEntry = $("<p></p>").text(`User: ${userMessage}`);
+            chatLog.append(chatEntry);
+            chatEntry = $("<p></p>").text(`Bot: ${botMessage}`);
+            chatLog.append(chatEntry);
+          },
+          error: (xhr, status, error) => {
+            console.error("Error:", error);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
